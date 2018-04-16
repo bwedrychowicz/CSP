@@ -18,10 +18,10 @@ void Algorithm::backtracking(Problem problem) {
 
 void Algorithm::forwardChecking(Problem problem) {
 	forwardCheck(problem, 0, 0);
-	if (isUnsignedLocation(problem))
-		cout << "nie rozwiazano";
-	else
-		cout << "rozwiazano";
+	//if (isUnsignedLocation(problem))
+	//	cout << "nie rozwiazano";
+	//else
+	//	cout << "rozwiazano";
 }
 
 
@@ -83,7 +83,7 @@ bool Algorithm::backtrack(Problem p, int row, int col) {
 				
 				p.problemBoard[row][col].domainPlace = d + 1;
 				satisfy = true;
-				cout << p.problemBoard[row][col].value << " ";
+				//cout << p.problemBoard[row][col].value << " ";
 			} else {
 				p.problemBoard[row][col].value = 0;
 				p.fixDomains(row, col, value);
@@ -95,7 +95,7 @@ bool Algorithm::backtrack(Problem p, int row, int col) {
 
 	if (satisfy == true) {
 		if (col + 1 == p.problemSize && row + 1 < p.problemSize) {
-			cout << endl;
+			//cout << endl;
 			forwardCheck(p, row + 1, 0);
 		} else if (col + 1 < p.problemSize && row < p.problemSize) {
 			forwardCheck(p, row, col + 1);

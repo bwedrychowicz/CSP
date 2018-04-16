@@ -50,6 +50,19 @@ void Problem::showProblem() {
 	}
 }
 
+void Problem::saveToFile(string fileName, string matrixName) {
+	ofstream file(fileName);
+	file << matrixName << "=np.array([";
+	for (int i = 0; i < problemSize; i++) {
+		file << "[";
+		for (int j = 0; j < problemSize - 1; j++) {
+			file << problemBoard[i][j].value << ", ";
+		}
+		file << problemBoard[i][problemSize - 1].value << "],"<<endl;
+	}
+	file << "])";
+}
+
 
 
 bool Problem::checkConstrains(int row, int col, int value) {
@@ -351,105 +364,129 @@ void Problem::fixDomainInTheSameRow(int row, int value) {
 void Problem::fixDomainFromSide(int row, int column, int value) {
 	bool insert = false;
 	if ((row - 1) >= 0) {
-		for (int j = 0; j < problemBoard[row - 1][column].domain.domainSize; j++) {
+		/*for (int j = 0; j < problemBoard[row - 1][column].domain.domainSize; j++) {
 			if (problemBoard[row - 1][column].domain.domain[j] == 0 && insert == false){
 				problemBoard[row - 1][column].domain.domain[j] = value;
 				insert = true;
 			}
-		}
+		}*/
+		if (problemBoard[row-1][column].domain.domain[value - 1] == 0)
+			problemBoard[row-1][column].domain.domain[value - 1] = value;
 	}
 	if ((row + 1) < problemSize) {
-		for (int j = 0; j < problemBoard[row + 1][column].domain.domainSize; j++) {
-			if (problemBoard[row + 1][column].domain.domain[j] == 0 && insert == false){
-				problemBoard[row + 1][column].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row + 1][column].domain.domainSize; j++) {
+		//	if (problemBoard[row + 1][column].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row + 1][column].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row+1][column].domain.domain[value - 1] == 0)
+			problemBoard[row+1][column].domain.domain[value - 1] = value;
 	}
 	if ((column - 1) >= 0) {
-		for (int j = 0; j < problemBoard[row][column - 1].domain.domainSize; j++) {
-			if (problemBoard[row][column - 1].domain.domain[j] == 0 && insert == false){
-				problemBoard[row][column - 1].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row][column - 1].domain.domainSize; j++) {
+		//	if (problemBoard[row][column - 1].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row][column - 1].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row][column-1].domain.domain[value - 1] == 0)
+			problemBoard[row][column-1].domain.domain[value - 1] = value;
 	}
 	if ((column + 1) < problemSize) {
-		for (int j = 0; j < problemBoard[row][column + 1].domain.domainSize; j++) {
-			if (problemBoard[row][column + 1].domain.domain[j] == 0 && insert == false){
-				problemBoard[row][column + 1].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row][column + 1].domain.domainSize; j++) {
+		//	if (problemBoard[row][column + 1].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row][column + 1].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row][column+1].domain.domain[value - 1] == 0)
+			problemBoard[row][column+1].domain.domain[value - 1] = value;
 	}
 }
 
 void Problem::fixDomainCross(int row, int column, int value) {
 	bool insert = false;
 	if ((row - 2) >= 0) {
-		for (int j = 0; j < problemBoard[row - 2][column].domain.domainSize; j++) {
-			if (problemBoard[row - 2][column].domain.domain[j] == 0 && insert == false){
-				problemBoard[row - 2][column].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row - 2][column].domain.domainSize; j++) {
+		//	if (problemBoard[row - 2][column].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row - 2][column].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row-2][column ].domain.domain[value - 1] == 0)
+			problemBoard[row-2][column ].domain.domain[value - 1] = value;
 	}
 	if ((row + 2) < problemSize) {
-		for (int j = 0; j < problemBoard[row + 2][column].domain.domainSize; j++) {
-			if (problemBoard[row + 2][column].domain.domain[j] == 0 && insert == false){
-				problemBoard[row + 2][column].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row + 2][column].domain.domainSize; j++) {
+		//	if (problemBoard[row + 2][column].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row + 2][column].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row+2][column ].domain.domain[value - 1] == 0)
+			problemBoard[row+2][column ].domain.domain[value - 1] = value;
 	}
 	if ((column - 2) >= 0) {
-		for (int j = 0; j < problemBoard[row][column - 2].domain.domainSize; j++) {
-			if (problemBoard[row][column - 2].domain.domain[j] == 0 && insert == false){
-				problemBoard[row][column - 2].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row][column - 2].domain.domainSize; j++) {
+		//	if (problemBoard[row][column - 2].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row][column - 2].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row][column -2].domain.domain[value - 1] == 0)
+			problemBoard[row][column -2].domain.domain[value - 1] = value;
 	}
 	if ((column + 2) < problemSize) {
-		for (int j = 0; j < problemBoard[row][column + 2].domain.domainSize; j++) {
-			if (problemBoard[row][column + 2].domain.domain[j] == 0 && insert == false){
-				problemBoard[row][column + 2].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row][column + 2].domain.domainSize; j++) {
+		//	if (problemBoard[row][column + 2].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row][column + 2].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row][column + 2].domain.domain[value - 1] == 0)
+			problemBoard[row][column + 2].domain.domain[value - 1] = value;
 	}
 
 
 	if ((row - 1) >= 0 && (column - 1) >= 0) {
-		for (int j = 0; j < problemBoard[row - 1][column - 1].domain.domainSize; j++) {
-			if (problemBoard[row - 1][column - 1].domain.domain[j] == 0 && insert == false){
-				problemBoard[row - 1][column - 1].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row - 1][column - 1].domain.domainSize; j++) {
+		//	if (problemBoard[row - 1][column - 1].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row - 1][column - 1].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row-1][column - 1].domain.domain[value - 1] == 0)
+			problemBoard[row-1][column - 1].domain.domain[value - 1] = value;
 	}
 	if ((row + 1) < problemSize && (column - 1) >= 0) {
-		for (int j = 0; j < problemBoard[row + 1][column - 1].domain.domainSize; j++) {
-			if (problemBoard[row + 1][column - 1].domain.domain[j] == 0 && insert == false){
-				problemBoard[row + 1][column - 1].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row + 1][column - 1].domain.domainSize; j++) {
+		//	if (problemBoard[row + 1][column - 1].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row + 1][column - 1].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row+1][column - 1].domain.domain[value - 1] == 0)
+			problemBoard[row+1][column - 1].domain.domain[value - 1] = value;
 	}
 	if ((row - 1) >= 0 && (column + 1) < problemSize) {
-		for (int j = 0; j < problemBoard[row - 1][column + 1].domain.domainSize; j++) {
-			if (problemBoard[row - 1][column + 1].domain.domain[j] == 0 && insert == false){
-				problemBoard[row - 1][column + 1].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row - 1][column + 1].domain.domainSize; j++) {
+		//	if (problemBoard[row - 1][column + 1].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row - 1][column + 1].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row-1][column + 1].domain.domain[value - 1] == 0)
+			problemBoard[row-1][column + 1].domain.domain[value - 1] = value;
 	}
 	if ((row + 1) < problemSize && (column + 1) < problemSize) {
-		for (int j = 0; j < problemBoard[row + 1][column + 1].domain.domainSize; j++) {
-			if (problemBoard[row + 1][column + 1].domain.domain[j] == 0 && insert == false){
-				problemBoard[row + 1][column + 1].domain.domain[j] = value;
-				insert = true;
-			}
-		}
+		//for (int j = 0; j < problemBoard[row + 1][column + 1].domain.domainSize; j++) {
+		//	if (problemBoard[row + 1][column + 1].domain.domain[j] == 0 && insert == false){
+		//		problemBoard[row + 1][column + 1].domain.domain[j] = value;
+		//		insert = true;
+		//	}
+		//}
+		if (problemBoard[row+1][column + 1].domain.domain[value - 1] == 0)
+			problemBoard[row+1][column + 1].domain.domain[value - 1] = value;
 	}
 }

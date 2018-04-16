@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ public:
 	void updateProblem(int row, int col, int value);
 
 	void showProblem();
+	void saveToFile(string fileName, string matrixName);
 
 	//constraints
 	bool checkConstrains(int row, int col, int value);
